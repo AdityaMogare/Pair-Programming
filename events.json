@@ -1,0 +1,162 @@
+[
+  {
+    "id": "evt_001",
+    "timestamp": "2025-07-09T14:30:00Z",
+    "actor": { "user_id": "alice", "ip": "198.51.100.10" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "US", "region": "California" }
+  },
+  {
+    "id": "evt_002",
+    "timestamp": "2025-07-09T10:15:00Z",
+    "actor": { "user_id": "bob", "ip": "198.51.100.22" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_staging" },
+    "geo": { "country": "CA", "region": "Ontario" }
+  },
+  {
+    "id": "evt_003",
+    "timestamp": "2025-07-09T03:15:00Z",
+    "actor": { "user_id": "svc_backup", "ip": "203.0.113.42" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "RU", "region": "Moscow" }
+  },
+  {
+    "id": "evt_004",
+    "timestamp": "2025-07-09T22:45:00Z",
+    "actor": { "user_id": "alice", "ip": "198.51.100.10" },
+    "action": "secret.read",
+    "resource": { "type": "secret", "id": "sec_db_password" },
+    "geo": { "country": "US", "region": "Virginia" }
+  },
+  {
+    "id": "evt_005",
+    "timestamp": "2025-07-09T11:00:00Z",
+    "actor": { "user_id": "carol", "ip": "192.0.2.55" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_marketing" },
+    "geo": { "country": "GB", "region": "London" }
+  },
+  {
+    "id": "evt_006",
+    "timestamp": "2025-07-09T16:20:00Z",
+    "actor": { "user_id": "dave", "ip": "198.51.100.88" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "US", "region": "Texas" }
+  },
+  {
+    "id": "evt_007",
+    "timestamp": "2025-07-09T02:10:00Z",
+    "actor": { "user_id": "unknown_7f3a", "ip": "185.220.101.9" },
+    "action": "token.exfil",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "DE", "region": "Berlin" }
+  },
+  {
+    "id": "evt_008",
+    "timestamp": "2025-07-09T09:00:00Z",
+    "actor": { "user_id": "bob", "ip": "198.51.100.22" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_staging" },
+    "geo": { "country": "CA", "region": "Ontario" }
+  },
+  {
+    "id": "evt_009",
+    "timestamp": "2025-07-09T18:00:00Z",
+    "actor": { "user_id": "eve", "ip": "192.0.2.77" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_internal" },
+    "geo": { "country": "US", "region": "Oregon" }
+  },
+  {
+    "id": "evt_010",
+    "timestamp": "2025-07-09T13:45:00Z",
+    "actor": { "user_id": "alice", "ip": "198.51.100.10" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "US", "region": "California" }
+  },
+  {
+    "id": "evt_011",
+    "timestamp": "2025-07-09T04:30:00Z",
+    "actor": { "user_id": "unknown_7f3a", "ip": "185.220.101.9" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "CN", "region": "Shanghai" }
+  },
+  {
+    "id": "evt_012",
+    "timestamp": "2025-07-09T15:00:00Z",
+    "actor": { "user_id": "frank", "ip": "203.0.113.99" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_legacy" },
+    "geo": { "country": "BR", "region": "Sao Paulo" }
+  },
+  {
+    "id": "evt_013",
+    "timestamp": "2025-07-09T12:30:00Z",
+    "actor": { "user_id": "grace", "ip": "198.51.100.33" },
+    "action": "health.ping",
+    "resource": { "type": "service", "id": "svc_monitor" },
+    "geo": { "country": "US", "region": "Ohio" }
+  },
+  {
+    "id": "evt_014",
+    "timestamp": "2025-07-09T17:55:00Z",
+    "actor": { "user_id": "dave", "ip": "198.51.100.88" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "US", "region": "Texas" }
+  },
+  {
+    "id": "evt_015",
+    "timestamp": "2025-07-09T01:00:00Z",
+    "actor": { "user_id": "svc_backup", "ip": "203.0.113.42" },
+    "action": "secret.read",
+    "resource": { "type": "secret", "id": "sec_api_key" },
+    "geo": { "country": "NL", "region": "Amsterdam" }
+  },
+  {
+    "id": "evt_016",
+    "timestamp": "2025-07-09T10:30:00Z",
+    "actor": { "user_id": "henry", "ip": "192.0.2.12" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_marketing" },
+    "geo": null
+  },
+  {
+    "id": "evt_017",
+    "timestamp": "2025-07-09T14:00:00Z",
+    "actor": { "user_id": "alice", "ip": "198.51.100.10" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "US", "region": "California" }
+  },
+  {
+    "id": "evt_018",
+    "timestamp": "2025-07-09T23:30:00Z",
+    "actor": { "user_id": "unknown_7f3a", "ip": "185.220.101.9" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "IR", "region": "Tehran" }
+  },
+  {
+    "id": "evt_019",
+    "timestamp": "2025-07-09T08:59:00Z",
+    "actor": { "user_id": "bob", "ip": "198.51.100.22" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_staging" },
+    "geo": { "country": "CA", "region": "Ontario" }
+  },
+  {
+    "id": "evt_020",
+    "timestamp": "2025-07-09T11:30:00Z",
+    "actor": { "user_id": "ivy", "ip": "198.51.100.44" },
+    "action": "token.access",
+    "resource": { "type": "canary_token", "id": "tok_new_hire" },
+    "geo": { "country": "US", "region": "New York" }
+  }
+]

@@ -1,0 +1,179 @@
+[
+  {
+    "event_id": "evt_001",
+    "suspicious": true,
+    "reasons": [
+      "new_actor",
+      "high_frequency"
+    ],
+    "severity": 2
+  },
+  {
+    "event_id": "evt_002",
+    "suspicious": true,
+    "reasons": [
+      "new_actor"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_003",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "unusual_region",
+      "new_actor",
+      "high_frequency"
+    ],
+    "severity": 3
+  },
+  {
+    "event_id": "evt_004",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "sensitive_action"
+    ],
+    "severity": 2
+  },
+  {
+    "event_id": "evt_005",
+    "suspicious": true,
+    "reasons": [
+      "new_actor"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_006",
+    "suspicious": true,
+    "reasons": [
+      "new_actor",
+      "high_frequency"
+    ],
+    "severity": 2
+  },
+  {
+    "event_id": "evt_007",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "unusual_region",
+      "sensitive_action",
+      "new_actor",
+      "high_frequency"
+    ],
+    "severity": 3
+  },
+  {
+    "event_id": "evt_008",
+    "suspicious": false,
+    "reasons": [],
+    "severity": 0
+  },
+  {
+    "event_id": "evt_009",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "new_actor"
+    ],
+    "severity": 2
+  },
+  {
+    "event_id": "evt_010",
+    "suspicious": true,
+    "reasons": [
+      "high_frequency"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_011",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "unusual_region",
+      "high_frequency"
+    ],
+    "severity": 3
+  },
+  {
+    "event_id": "evt_012",
+    "suspicious": true,
+    "reasons": [
+      "unusual_region",
+      "new_actor"
+    ],
+    "severity": 2
+  },
+  {
+    "event_id": "evt_013",
+    "suspicious": true,
+    "reasons": [
+      "new_actor"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_014",
+    "suspicious": true,
+    "reasons": [
+      "high_frequency"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_015",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "unusual_region",
+      "sensitive_action"
+    ],
+    "severity": 3
+  },
+  {
+    "event_id": "evt_016",
+    "suspicious": true,
+    "reasons": [
+      "unusual_region",
+      "new_actor"
+    ],
+    "severity": 2
+  },
+  {
+    "event_id": "evt_017",
+    "suspicious": true,
+    "reasons": [
+      "high_frequency"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_018",
+    "suspicious": true,
+    "reasons": [
+      "off_hours",
+      "unusual_region",
+      "high_frequency"
+    ],
+    "severity": 3
+  },
+  {
+    "event_id": "evt_019",
+    "suspicious": true,
+    "reasons": [
+      "off_hours"
+    ],
+    "severity": 1
+  },
+  {
+    "event_id": "evt_020",
+    "suspicious": true,
+    "reasons": [
+      "new_actor"
+    ],
+    "severity": 1
+  }
+]
