@@ -1,92 +1,58 @@
-# Canary-flavored anomaly detection (pair programming)
+# Pair-Programming Debug Gym
 
-25–35 minute exercise: flag suspicious cloud events from a small JSON dataset using rules you define **together during the session**.
+Practice debugging like production: broken code on the default branch, solutions in open Pull Requests.
 
-## Quick start (interviewer)
+## How it works
+
+1. **Pick an exercise** folder below.
+2. **Run its tests** — they fail on purpose.
+3. **Fix the bugs** locally (change one thing at a time).
+4. **Check your work** (or get unstuck) via the matching open PR → **Files changed**.
+
+> **Do not merge solution PRs.** They stay open forever as the answer key.
+
+## Exercises
+
+| Folder | Status | Topic |
+|--------|--------|--------|
+| [`01-anomaly-detector/`](01-anomaly-detector/) | Ready | Flag suspicious cloud events (boundary, nulls, inverted logic, thresholds) |
+| [`02-telemetry-pipeline/`](02-telemetry-pipeline/) | Coming soon | Structured logging / pipeline transforms |
+| [`03-agent-observability/`](03-agent-observability/) | Coming soon | Stream metrics and alert thresholds |
+
+## Workflow (Git + PR model)
+
+```text
+master (or main)     ← starting line: intentionally buggy code
+  └── solution/01-anomaly-detector   ← fixed version (open PR, never merge)
+  └── solution/02-telemetry-pipeline ← (when ready)
+```
+
+### For learners
 
 ```bash
-# Python (default)
-python3 run.py
-
-# Node (optional — same exercise)
-node run.js
+git clone https://github.com/AdityaMogare/Pair-Programming.git
+cd Pair-Programming
+cd 01-anomaly-detector
+python3 test_detector.py
 ```
 
-Open `events.json` on screen. Hand the candidate `detector.py` (or `detector.js`) and say:
+When stuck or done: open the repo on GitHub → **Pull requests** → find `solution/01-anomaly-detector` → read **Files changed**.
 
-> "Given these events, write something that surfaces the ones that look suspicious. We'll define what 'suspicious' means as we go."
+### For maintainers (adding a new exercise)
 
-## Suggested live rule rollout
+```bash
+git checkout master
+# add 0N-your-exercise/ with buggy code + tests + README
+git add 0N-your-exercise && git commit -m "Add 0N-your-exercise (buggy starting line)"
+git push origin master
 
-Introduce criteria in phases so you can watch them adapt to a changing spec.
-
-### Phase 1 — Baseline (5–8 min)
-
-Define together:
-
-| Rule | Definition |
-|------|------------|
-| **Off-hours** | Event timestamp outside **09:00–18:00 UTC** (inclusive start, exclusive end of window — clarify this!) |
-| **Unusual region** | `geo.country` not in **`US`, `CA`, `GB`** |
-
-Expected output shape (negotiate with candidate):
-
-```json
-{
-  "event_id": "evt_007",
-  "suspicious": true,
-  "reasons": ["off_hours", "unusual_region"],
-  "severity": 2
-}
+git checkout -b solution/0N-your-exercise
+# fix bugs only inside 0N-your-exercise/
+git add 0N-your-exercise && git commit -m "solution: fix 0N-your-exercise"
+git push -u origin solution/0N-your-exercise
+gh pr create --base master --title "solution: 0N-your-exercise" --body "Answer key — leave open, do not merge."
 ```
 
-**Watch for:** Do they ask whether 09:00 is in or out? Empty/missing `geo`? Missing timestamp?
+## Tech
 
-### Phase 2 — Extend (8–12 min)
-
-Add one or two rules:
-
-| Rule | Definition |
-|------|------------|
-| **Sensitive action** | `action` is `token.exfil` or `secret.read` |
-| **New actor** | First time this `actor.user_id` appears in the dataset (requires seeing all events) |
-
-**Watch for:** Do they refactor into pluggable rules instead of one giant `if` chain?
-
-### Phase 3 — Frequency weight (5–8 min)
-
-> "Now also weight by frequency: if the same `resource.id` is accessed **more than 3 times** in the dataset, bump severity by 1 (cap at 3)."
-
-**Watch for:** Two-pass design (count first, then score)? Reuse of existing severity logic?
-
-### Optional stretch
-
-- Sort results by severity descending
-- Return only `suspicious: true` events
-- Treat `geo.country: null` as suspicious (unknown location)
-
-## Evaluation rubric
-
-| Signal | Strong | Weak |
-|--------|--------|------|
-| **Clarification** | Asks about timezone, inclusive bounds, missing fields, output format | Assumes silently, codes wrong edge behavior |
-| **Structure** | Rules as functions/modules; easy to add Phase 2/3 | Monolithic nested ifs; hard to extend |
-| **Testing** | Runs on 2–3 events verbally or with prints before "done" | Never validates edge cases |
-| **Adaptability** | Minimal refactor when spec changes | Rewrites from scratch |
-| **Communication** | Talks through tradeoffs (single vs two pass) | Goes quiet for long stretches |
-
-## Files
-
-| File | Purpose |
-|------|---------|
-| `events.json` | 20 raw cloud events (mix of normal + suspicious) |
-| `detector.py` / `detector.js` | Candidate starter (stub + types/comments) |
-| `run.py` / `run.js` | Runs detector and prints results |
-| `reference/detector.py` | Interviewer-only reference solution |
-| `reference/expected_phase3.json` | Expected flags after all three phases |
-
-## Sample debrief questions
-
-1. How would you deploy this if events arrived as a stream instead of a batch?
-2. What would you log when a rule fires in production?
-3. How would you unit-test the off-hours rule across DST?
+Python 3 stdlib only. No packages to install.
