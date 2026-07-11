@@ -1,5 +1,5 @@
 """
-Buggy detector — looks production-ready, but the tests fail.
+Anomaly detector service — flags suspicious cloud security events.
 
 Spec:
   - off_hours: timestamp hour outside [09:00, 18:00) UTC
@@ -8,8 +8,8 @@ Spec:
   - new_actor: first appearance of actor.user_id in the batch
   - high_frequency: resource.id appears more than 3 times → +1 severity (cap 3)
 
-Make `python3 test_detector.py` pass.
-Stuck? See the open PR solution/01-anomaly-detector (Files changed).
+Run: python3 test_detector.py
+Stuck? Open PR solution/01-anomaly-detector → Files changed.
 """
 
 from __future__ import annotations

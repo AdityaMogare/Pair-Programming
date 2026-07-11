@@ -1,0 +1,13 @@
+2025-07-09T01:00:05Z INFO  anomaly-detector request_id=req_015 event_id=evt_015 action=secret.read country=NL severity_candidate=?
+2025-07-09T02:10:12Z WARN  anomaly-detector request_id=req_007 event_id=evt_007 action=token.exfil country=DE actor=unknown_7f3a resource=tok_prod_api
+2025-07-09T03:15:01Z WARN  anomaly-detector request_id=req_003 event_id=evt_003 action=token.access country=RU actor=svc_backup resource=tok_prod_api
+2025-07-09T04:30:44Z INFO  anomaly-detector request_id=req_011 event_id=evt_011 action=token.access country=CN actor=unknown_7f3a resource=tok_prod_api
+2025-07-09T08:59:02Z INFO  anomaly-detector request_id=req_019 event_id=evt_019 action=token.access country=CA actor=bob resource=tok_staging
+2025-07-09T09:00:00Z INFO  anomaly-detector request_id=req_008 event_id=evt_008 action=token.access country=CA actor=bob resource=tok_staging
+2025-07-09T10:15:10Z INFO  anomaly-detector request_id=req_002 event_id=evt_002 action=token.access country=CA actor=bob resource=tok_staging
+2025-07-09T10:30:22Z INFO  anomaly-detector request_id=req_016 event_id=evt_016 action=token.access country=null actor=henry resource=tok_marketing
+2025-07-09T14:30:00Z INFO  anomaly-detector request_id=req_001 event_id=evt_001 action=token.access country=US actor=alice resource=tok_prod_api
+2025-07-09T18:00:01Z INFO  anomaly-detector request_id=req_009 event_id=evt_009 action=token.access country=US actor=eve resource=tok_internal
+2025-07-09T22:45:18Z WARN  anomaly-detector request_id=req_004 event_id=evt_004 action=secret.read country=US actor=alice
+2025-07-09T23:30:55Z WARN  anomaly-detector request_id=req_018 event_id=evt_018 action=token.access country=IR actor=unknown_7f3a resource=tok_prod_api
+2025-07-09T23:31:02Z ERROR anomaly-detector request_id=req_batch batch_size=20 flagged_count=mismatch_vs_playbook

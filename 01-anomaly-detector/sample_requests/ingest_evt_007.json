@@ -1,0 +1,12 @@
+{
+  "endpoint": "POST /v1/events/ingest",
+  "description": "Sample ingest body matching fixtures/events.json evt_007",
+  "body": {
+    "id": "evt_007",
+    "timestamp": "2025-07-09T02:10:00Z",
+    "actor": { "user_id": "unknown_7f3a", "ip": "185.220.101.9" },
+    "action": "token.exfil",
+    "resource": { "type": "canary_token", "id": "tok_prod_api" },
+    "geo": { "country": "DE", "region": "Berlin" }
+  }
+}

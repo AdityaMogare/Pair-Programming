@@ -1,17 +1,12 @@
 # 01 — Anomaly detector
 
-Someone "finished" this cloud-event anomaly detector. It runs. Output looks plausible. Tests fail.
+## Scenario
 
-## Goal
+Security ops opened a ticket: the canary-token anomaly detector is either missing high-risk events or flooding the queue with noise. Overnight review of `tok_prod_api` looked wrong compared to what analysts expected from the raw event feed.
 
-```bash
-cd 01-anomaly-detector
-python3 test_detector.py
-```
+## Expected behavior
 
-Optional: `python3 run.py` to print currently flagged events.
-
-## Spec
+Given a batch of cloud events, flag suspicious ones using:
 
 | Rule | Definition |
 |------|------------|
@@ -19,31 +14,42 @@ Optional: `python3 run.py` to print currently flagged events.
 | **unusual_region** | `geo.country` not in `{US, CA, GB}` — **null geo counts as unusual** |
 | **sensitive_action** | `action` is `token.exfil` or `secret.read` |
 | **new_actor** | First time this `actor.user_id` appears in the batch |
-| **high_frequency** | Same `resource.id` appears **more than 3** times → append reason and **+1 severity**, severity **capped at 3** |
+| **high_frequency** | Same `resource.id` appears **more than 3** times → reason + **+1 severity**, severity **capped at 3** |
 
-Expected results: `expected.json`.
+## Broken behavior
 
-## Debug loop
+Regression tests against `fixtures/expected.json` fail. Severity and reasons disagree with the analyst playbook for several `event_id`s (see test output).
 
-1. **Reproduce** — run the test; read failures.
-2. **Isolate** — pick one `event_id` in `events.json`.
-3. **Predict** — which reasons should fire? What severity?
-4. **Observe** — temporary prints in `detector.py`.
-5. **Fix one bug** — re-run; watch the failure count drop.
+## Run
 
-## Probe events
+```bash
+cd 01-anomaly-detector
+python3 test_detector.py
+# optional:
+python3 run.py
+```
+
+## Hints
+
+- Check `logs/` for the same `event_id` around the failure window
+- Inspect the failing test lines first — one event at a time
+- Compare `fixtures/events.json` to `fixtures/expected.json`
+- Look for edge cases: boundaries, null geo, first vs later actor, frequency threshold
+
+### Probe events
 
 | Event | Why |
 |-------|-----|
-| `evt_009` | Exactly `18:00:00Z` — off-hours boundary |
+| `evt_009` | Exactly `18:00:00Z` |
 | `evt_016` | `geo: null` |
 | `evt_007` | `token.exfil` + many signals |
-| `evt_008` | Bob's *second* access — should **not** be `new_actor` |
-| `evt_002` | Bob's *first* access — **should** be `new_actor` |
-| `evt_019` | `tok_staging` appears 3 times — frequency threshold |
+| `evt_008` / `evt_002` | Bob second vs first access |
+| `evt_019` | `tok_staging` appears 3 times |
+
+## Success criteria
+
+`python3 test_detector.py` exits 0 and matches `fixtures/expected.json`.
 
 ## Stuck?
 
-Open the Pull Request **`solution/01-anomaly-detector`** on GitHub and inspect **Files changed**. Do not merge that PR.
-
-Time box: 20–30 minutes.
+Open PR **`solution/01-anomaly-detector`** → **Files changed**. Do not merge that PR.

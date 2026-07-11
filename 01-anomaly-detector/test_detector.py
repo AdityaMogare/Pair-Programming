@@ -14,12 +14,12 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from detector import flag_suspicious_events  # noqa: E402
+from app import flag_suspicious_events  # noqa: E402
 
 
 def _load() -> tuple[list, list]:
-    events = json.loads((HERE / "events.json").read_text())
-    expected = json.loads((HERE / "expected.json").read_text())
+    events = json.loads((HERE / "fixtures" / "events.json").read_text())
+    expected = json.loads((HERE / "fixtures" / "expected.json").read_text())
     return events, expected
 
 
@@ -72,7 +72,7 @@ def main() -> int:
     actual = flag_suspicious_events(events)
     failures = compare(actual, expected)
 
-    print(f"Checked {len(expected)} events against expected.json\n")
+    print(f"Checked {len(expected)} events against fixtures/expected.json\n")
 
     if not failures:
         print("All checks passed. Nice debugging.")
@@ -83,10 +83,10 @@ def main() -> int:
         print(f"  • {line}")
 
     print("\nHints (no spoilers):")
-    print("  1. Pick ONE failing event_id and open it in events.json.")
-    print("  2. Manually apply the rules from README.md — what should fire?")
-    print("  3. Add a temporary print for that event inside detector.py.")
-    print("  4. Fix one bug, re-run. Don't boil the ocean.")
+    print("  1. Pick ONE failing event_id and open it in fixtures/events.json.")
+    print("  2. Check logs/ for the same event_id around the failure window.")
+    print("  3. Manually apply the rules from README.md — what should fire?")
+    print("  4. Fix one bug in app.py, re-run. Don't boil the ocean.")
     print("\nStuck? Open PR solution/01-anomaly-detector → Files changed.")
     return 1
 

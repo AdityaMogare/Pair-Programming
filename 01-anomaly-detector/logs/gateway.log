@@ -1,0 +1,5 @@
+2025-07-09T02:10:11Z gateway method=POST path=/v1/events/ingest status=202 request_id=req_007 src_ip=185.220.101.9
+2025-07-09T03:15:00Z gateway method=POST path=/v1/events/ingest status=202 request_id=req_003 src_ip=203.0.113.42
+2025-07-09T10:30:21Z gateway method=POST path=/v1/events/ingest status=202 request_id=req_016 src_ip=192.0.2.12 geo_header=missing
+2025-07-09T18:00:00Z gateway method=POST path=/v1/events/ingest status=202 request_id=req_009 src_ip=192.0.2.77
+2025-07-09T23:31:00Z gateway method=GET  path=/v1/anomalies status=200 request_id=req_review flagged=inconsistent
