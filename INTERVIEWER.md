@@ -40,11 +40,22 @@ print('reference OK')
 "
 ```
 
+## Debug track (alternate / follow-on)
+
+Hand them `debug/detector.py` + `DEBUG.md` instead of the stub:
+
+> "A teammate shipped this detector. Tests fail. Fix it without rewriting from scratch."
+
+**Watch for:** Do they reproduce first? Isolate one event? Change one thing at a time? Or rewrite the file?
+
+Spoilers: `debug/BUGS.md` (5 bugs: boundary, null geo, typo, inverted new_actor, frequency/`>=` + uncapped severity).
+
 ## If they finish early
 
 - "How would you make rules configurable without redeploying?"
 - "What if `timestamp` is missing?"
 - "Return a single `risk_score` float instead of integer severity"
+- Switch to the debug track if they only did the build track (or vice versa)
 
 ## Red flags vs green flags
 

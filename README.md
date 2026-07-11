@@ -1,8 +1,13 @@
 # Canary-flavored anomaly detection (pair programming)
 
-25–35 minute exercise: flag suspicious cloud events from a small JSON dataset using rules you define **together during the session**.
+Two tracks on the same dataset:
 
-## Quick start (interviewer)
+| Track | Time | What you practice |
+|-------|------|-------------------|
+| **Build** | 25–35 min | Write the detector from a stub; adapt as rules change |
+| **Debug** | 20–30 min | Fix a "finished" detector that fails tests — see [DEBUG.md](DEBUG.md) |
+
+## Quick start — build track (interviewer)
 
 ```bash
 # Python (default)
@@ -16,6 +21,14 @@ Open `events.json` on screen. Hand the candidate `detector.py` (or `detector.js`
 
 > "Given these events, write something that surfaces the ones that look suspicious. We'll define what 'suspicious' means as we go."
 
+## Quick start — debug track (solo or pair)
+
+```bash
+python3 -m debug.test_detector   # failing tests = your map
+python3 debug/run.py             # eyeball current output
+```
+
+Full loop and probe events: [DEBUG.md](DEBUG.md). Spoilers only when stuck: [debug/BUGS.md](debug/BUGS.md).
 ## Suggested live rule rollout
 
 Introduce criteria in phases so you can watch them adapt to a changing spec.
@@ -80,9 +93,13 @@ Add one or two rules:
 | File | Purpose |
 |------|---------|
 | `events.json` | 20 raw cloud events (mix of normal + suspicious) |
-| `detector.py` / `detector.js` | Candidate starter (stub + types/comments) |
+| `detector.py` / `detector.js` | Build-track starter (stub) |
 | `run.py` / `run.js` | Runs detector and prints results |
-| `reference/detector.py` | Interviewer-only reference solution |
+| `DEBUG.md` | Debug-track instructions (no spoilers) |
+| `debug/detector.py` | Intentionally buggy "finished" solution |
+| `debug/test_detector.py` | Diffs against expected output |
+| `debug/BUGS.md` | Spoiler list of planted bugs |
+| `reference/detector.py` | Correct reference solution |
 | `reference/expected_phase3.json` | Expected flags after all three phases |
 
 ## Sample debrief questions
