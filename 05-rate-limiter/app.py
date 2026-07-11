@@ -1,0 +1,15 @@
+"""
+Rate limiter — intentionally incomplete / buggy starting line.
+
+Status: scaffold for Debug Gym v2. Implement or extend when this exercise is fully authored.
+Run: python3 test_rate_limiter.py
+"""
+
+from __future__ import annotations
+
+from typing import Any
+
+
+def run(payload: dict[str, Any]) -> dict[str, Any]:
+    """Entry point under test. Replace with the real buggy service logic when authored."""
+    raise NotImplementedError("05-rate-limiter is scaffolded — add buggy implementation next")

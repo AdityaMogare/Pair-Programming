@@ -1,5 +1,5 @@
 """
-Fixed anomaly detector — answer key for solution/01-anomaly-detector.
+Anomaly detector service — fixed answer key (solution/01-anomaly-detector).
 
 Spec:
   - off_hours: timestamp hour outside [09:00, 18:00) UTC

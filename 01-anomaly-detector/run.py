@@ -4,13 +4,13 @@
 import json
 from pathlib import Path
 
-from detector import flag_suspicious_events
+from app import flag_suspicious_events
 
 HERE = Path(__file__).resolve().parent
 
 
 def main() -> None:
-    events = json.loads((HERE / "events.json").read_text())
+    events = json.loads((HERE / "fixtures" / "events.json").read_text())
     results = flag_suspicious_events(events)
     suspicious = [r for r in results if r.get("suspicious")]
 
