@@ -1,2 +1,4 @@
-# Placeholder log stream for 02-telemetry-pipeline
-# Replace with realistic app / worker / gateway logs when the exercise is authored.
+2025-07-11T02:15:20Z INFO  telemetry-api POST /v1/shipper/ingest nodes=2
+2025-07-11T02:15:21Z INFO  telemetry-api node=agent-east-1 lines=4
+2025-07-11T02:15:21Z INFO  telemetry-api node=agent-west-2 lines=3
+2025-07-11T02:15:22Z WARN  telemetry-api emit_total=9 expected≈6 status=anomaly

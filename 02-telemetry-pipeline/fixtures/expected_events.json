@@ -1,0 +1,59 @@
+{
+  "events": [
+    {
+      "event_id": "evt_e1",
+      "timestamp": "2025-07-10T22:30:00Z",
+      "severity": "warning",
+      "message": "upstream timeout",
+      "service": "api-gateway",
+      "node_id": "agent-east-1"
+    },
+    {
+      "event_id": "evt_e2",
+      "timestamp": "2025-07-10T22:00:00Z",
+      "severity": "info",
+      "message": "health ok",
+      "service": "api-gateway",
+      "node_id": "agent-east-1"
+    },
+    {
+      "event_id": "evt_e3",
+      "timestamp": "2025-07-10T23:45:00Z",
+      "severity": "error",
+      "message": "db pool exhausted",
+      "service": "checkout",
+      "node_id": "agent-east-1"
+    },
+    {
+      "event_id": "evt_w1",
+      "timestamp": "2025-07-11T01:00:00Z",
+      "severity": "error",
+      "message": "circuit open",
+      "service": "payments",
+      "node_id": "agent-west-2"
+    },
+    {
+      "event_id": "evt_w2",
+      "timestamp": "2025-07-10T12:00:00Z",
+      "severity": "warning",
+      "message": "retry scheduled",
+      "service": "payments",
+      "node_id": "agent-west-2"
+    },
+    {
+      "event_id": "evt_w3",
+      "timestamp": "2025-07-11T02:15:00Z",
+      "severity": "info",
+      "message": "batch flushed",
+      "service": "shipper",
+      "node_id": "agent-west-2"
+    }
+  ],
+  "errors": [
+    {
+      "node_id": "agent-east-1",
+      "line": "{not valid json — truncated shipper frame",
+      "reason": "malformed_json"
+    }
+  ]
+}

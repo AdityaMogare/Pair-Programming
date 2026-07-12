@@ -1,0 +1,12 @@
+2025-07-10T22:30:01Z INFO  shipper node=agent-east-1 event_id=evt_e1 level=WARN ts_in=2025-07-10T15:30:00-07:00
+2025-07-10T22:00:02Z INFO  shipper node=agent-east-1 event_id=evt_e2 level=INFO ts_in=2025-07-10T22:00:00Z
+2025-07-10T22:00:03Z ERROR shipper node=agent-east-1 parse_error=malformed_json line="{not valid json — truncated shipper frame"
+2025-07-10T23:45:04Z INFO  shipper node=agent-east-1 event_id=evt_e3 level=ERROR ts_in=2025-07-10T16:45:00-07:00
+2025-07-10T23:45:05Z INFO  shipper node=agent-east-1 flush count=3
+2025-07-11T01:00:10Z INFO  shipper node=agent-west-2 event_id=evt_w1 level=ERROR ts_in=2025-07-10T18:00:00-07:00
+2025-07-10T12:00:11Z INFO  shipper node=agent-west-2 event_id=evt_w2 level=WARNING ts_in=2025-07-10T12:00:00+00:00
+2025-07-11T02:15:12Z INFO  shipper node=agent-west-2 event_id=evt_w3 level=INFO ts_in=2025-07-10T19:15:00-07:00
+2025-07-11T02:15:13Z WARN  shipper node=agent-west-2 flush count=6 expected=3 note=downstream_duplicate_spike
+2025-07-11T02:15:14Z ERROR analytics ingest duplicates=evt_e1,evt_e2,evt_e3 remapped_node_id=agent-west-2
+2025-07-11T02:15:15Z WARN  analytics severity_mismatch event_id=evt_e1 got=info expected=warning
+2025-07-11T02:15:16Z WARN  analytics timestamp_skew event_id=evt_e1 got=2025-07-10T15:30:00Z expected=2025-07-10T22:30:00Z

@@ -1,15 +1,20 @@
 """
-Telemetry pipeline — intentionally incomplete / buggy starting line.
+Telemetry pipeline — log shipper ingest API.
 
-Status: scaffold for Debug Gym v2. Implement or extend when this exercise is fully authored.
+Accepts batched raw lines from multi-agent nodes, runs:
+  API → Parser → Transformer → Validator → Output
+
 Run: python3 test_pipeline.py
+Stuck? Open PR solution/02-telemetry-pipeline → Files changed.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
+from pipeline import run_pipeline
+
 
 def run(payload: dict[str, Any]) -> dict[str, Any]:
-    """Entry point under test. Replace with the real buggy service logic when authored."""
-    raise NotImplementedError("02-telemetry-pipeline is scaffolded — add buggy implementation next")
+    """Entry point under test — shipper upgrade ingest handler."""
+    return run_pipeline(payload)

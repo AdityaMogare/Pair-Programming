@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {
+      "node_id": "agent-east-1",
+      "lines": [
+        "{\"id\":\"evt_e1\",\"ts\":\"2025-07-10T15:30:00-07:00\",\"level\":\"WARN\",\"msg\":\"upstream timeout\",\"service\":\"api-gateway\"}",
+        "{\"id\":\"evt_e2\",\"ts\":\"2025-07-10T22:00:00Z\",\"level\":\"INFO\",\"msg\":\"health ok\",\"service\":\"api-gateway\"}",
+        "{not valid json — truncated shipper frame",
+        "{\"id\":\"evt_e3\",\"ts\":\"2025-07-10T16:45:00-07:00\",\"level\":\"ERROR\",\"msg\":\"db pool exhausted\",\"service\":\"checkout\"}"
+      ]
+    },
+    {
+      "node_id": "agent-west-2",
+      "lines": [
+        "{\"id\":\"evt_w1\",\"ts\":\"2025-07-10T18:00:00-07:00\",\"level\":\"ERROR\",\"msg\":\"circuit open\",\"service\":\"payments\"}",
+        "{\"id\":\"evt_w2\",\"ts\":\"2025-07-10T12:00:00+00:00\",\"level\":\"WARNING\",\"msg\":\"retry scheduled\",\"service\":\"payments\"}",
+        "{\"id\":\"evt_w3\",\"ts\":\"2025-07-10T19:15:00-07:00\",\"level\":\"INFO\",\"msg\":\"batch flushed\",\"service\":\"shipper\"}"
+      ]
+    }
+  ]
+}

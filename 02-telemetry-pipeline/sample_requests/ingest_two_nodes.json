@@ -1,0 +1,21 @@
+{
+  "endpoint": "POST /v1/shipper/ingest",
+  "description": "Multi-agent node batch matching fixtures/ingest_payload.json (truncated)",
+  "body": {
+    "nodes": [
+      {
+        "node_id": "agent-east-1",
+        "lines": [
+          "{\"id\":\"evt_e1\",\"ts\":\"2025-07-10T15:30:00-07:00\",\"level\":\"WARN\",\"msg\":\"upstream timeout\",\"service\":\"api-gateway\"}",
+          "{not valid json — truncated shipper frame"
+        ]
+      },
+      {
+        "node_id": "agent-west-2",
+        "lines": [
+          "{\"id\":\"evt_w1\",\"ts\":\"2025-07-10T18:00:00-07:00\",\"level\":\"ERROR\",\"msg\":\"circuit open\",\"service\":\"payments\"}"
+        ]
+      }
+    ]
+  }
+}
