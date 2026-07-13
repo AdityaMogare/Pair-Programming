@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "user_id": "u_100",
+      "display_name": "Alice",
+      "email": "alice@example.com",
+      "plan": "pro"
+    },
+    {
+      "user_id": "u_200",
+      "display_name": "Bob",
+      "email": "bob@example.com",
+      "plan": "free"
+    }
+  ],
+  "ttl_seconds": 60
+}

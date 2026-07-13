@@ -1,0 +1,111 @@
+{
+  "description": "Write invalidation + TTL expiry must not serve stale profiles",
+  "ttl_seconds": 60,
+  "steps": [
+    {
+      "name": "cold_read_alice",
+      "action": {"action": "get", "user_id": "u_100"},
+      "expect": {
+        "ok": true,
+        "source": "db",
+        "profile": {
+          "user_id": "u_100",
+          "display_name": "Alice",
+          "email": "alice@example.com",
+          "plan": "pro"
+        }
+      }
+    },
+    {
+      "name": "warm_read_alice",
+      "action": {"action": "get", "user_id": "u_100"},
+      "expect": {
+        "ok": true,
+        "source": "cache",
+        "profile": {
+          "user_id": "u_100",
+          "display_name": "Alice",
+          "email": "alice@example.com",
+          "plan": "pro"
+        }
+      }
+    },
+    {
+      "name": "update_alice_name",
+      "action": {
+        "action": "update",
+        "user_id": "u_100",
+        "fields": {"display_name": "Alice Cooper"}
+      },
+      "expect": {
+        "ok": true,
+        "source": "db",
+        "profile": {
+          "user_id": "u_100",
+          "display_name": "Alice Cooper",
+          "email": "alice@example.com",
+          "plan": "pro"
+        }
+      }
+    },
+    {
+      "name": "read_after_write_must_be_fresh",
+      "action": {"action": "get", "user_id": "u_100"},
+      "expect": {
+        "ok": true,
+        "source": "db",
+        "profile": {
+          "user_id": "u_100",
+          "display_name": "Alice Cooper",
+          "email": "alice@example.com",
+          "plan": "pro"
+        }
+      }
+    },
+    {
+      "name": "cache_bob_then_confirm_isolation",
+      "action": {"action": "get", "user_id": "u_200"},
+      "expect": {
+        "ok": true,
+        "profile": {
+          "user_id": "u_200",
+          "display_name": "Bob",
+          "email": "bob@example.com",
+          "plan": "free"
+        }
+      }
+    },
+    {
+      "name": "alice_still_alice_not_bob",
+      "action": {"action": "get", "user_id": "u_100"},
+      "expect": {
+        "ok": true,
+        "profile": {
+          "user_id": "u_100",
+          "display_name": "Alice Cooper",
+          "email": "alice@example.com",
+          "plan": "pro"
+        }
+      }
+    },
+    {
+      "name": "advance_past_ttl",
+      "action": {"action": "advance", "seconds": 61},
+      "expect": {"ok": true}
+    },
+    {
+      "name": "first_read_after_ttl_must_not_be_stale",
+      "action": {"action": "get", "user_id": "u_100"},
+      "expect": {
+        "ok": true,
+        "source": "db",
+        "profile": {
+          "user_id": "u_100",
+          "display_name": "Alice Cooper",
+          "email": "alice@example.com",
+          "plan": "pro"
+        }
+      }
+    }
+  ]
+}

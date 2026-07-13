@@ -1,0 +1,5 @@
+{
+  "endpoint": "GET /profiles/u_100",
+  "description": "Read Alice after write — must not serve cached pre-rename row",
+  "body": null
+}

@@ -1,0 +1,11 @@
+2025-07-11T14:00:01Z INFO  profile-api GET /profiles/u_100 source=db cache_key=profile:u_100
+2025-07-11T14:00:02Z INFO  profile-api GET /profiles/u_100 source=cache cache_key=profile:u_100
+2025-07-11T14:00:10Z INFO  profile-api PATCH /profiles/u_100 fields=display_name
+2025-07-11T14:00:10Z INFO  redis DEL user:u_100:profile result=0 note=key_missing
+2025-07-11T14:00:10Z WARN  redis live_keys=[profile:u_100] after_patch
+2025-07-11T14:00:11Z WARN  profile-api GET /profiles/u_100 source=cache display_name=Alice expected=Alice Cooper stale=true
+2025-07-11T14:01:12Z INFO  redis TTL profile:u_100 expired=true
+2025-07-11T14:01:12Z WARN  profile-api GET /profiles/u_100 source=cache display_name=Alice Cooper served_after_expiry=true
+2025-07-11T14:01:12Z INFO  redis EVICT profile:u_100 after_read
+2025-07-11T14:01:13Z INFO  profile-api GET /profiles/u_100 source=db display_name=Alice Cooper
+2025-07-11T14:01:20Z ERROR support ticket=TCK-4412 user=u_100 symptom=saw_old_name_after_save then_once_more_after_minute

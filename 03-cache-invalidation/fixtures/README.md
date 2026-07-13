@@ -1,3 +1,6 @@
 # Fixtures for 03-cache-invalidation
 
-Add sample payloads, seed data, and expected outputs here when authoring the exercise.
+| File | Role |
+|------|------|
+| `seed_users.json` | Initial DB rows + default TTL |
+| `expected_scenario.json` | Scripted get/update/advance steps and expected responses |

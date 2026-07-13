@@ -1,2 +1,5 @@
-# Placeholder log stream for 03-cache-invalidation
-# Replace with realistic app / worker / gateway logs when the exercise is authored.
+2025-07-11T14:00:00Z INFO  cache-service boot ttl_seconds=60 backend=in_memory_redis
+2025-07-11T14:00:10Z INFO  cache-service write user_id=u_100 invalidate=attempted
+2025-07-11T14:00:11Z WARN  cache-service read user_id=u_100 stale_after_write=true
+2025-07-11T14:01:12Z WARN  cache-service read user_id=u_100 stale_after_ttl=true
+2025-07-11T14:01:20Z ERROR cache-service incident=stale_profile_reads env=prod

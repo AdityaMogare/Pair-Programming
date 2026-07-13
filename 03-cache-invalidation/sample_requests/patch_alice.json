@@ -1,0 +1,7 @@
+{
+  "endpoint": "PATCH /profiles/u_100",
+  "description": "Profile rename that should invalidate profile:u_100",
+  "body": {
+    "display_name": "Alice Cooper"
+  }
+}
