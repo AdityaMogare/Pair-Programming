@@ -18,12 +18,9 @@ class InMemoryCache:
             return None
 
         value, expires_at = self._store[key]
-
-        # Serve the cached value, then expire if needed.
-        # (TTL eviction runs after the read.)
         if self._clock() >= expires_at:
             del self._store[key]
-
+            return None
         return value
 
     def set(self, key: str, value: Any, ttl_seconds: int) -> None:
