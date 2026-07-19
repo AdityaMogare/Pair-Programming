@@ -15,8 +15,7 @@ def cache_key_for_read(user_id: str) -> str:
 
 
 def cache_key_for_invalidate(user_id: str) -> str:
-    # Mismatched key shape vs reads — deletes never hit the live entry.
-    return f"user:{user_id}:profile"
+    return cache_key_for_read(user_id)
 
 
 class ProfileService:
@@ -48,9 +47,6 @@ class ProfileService:
         if updated is None:
             return None
 
-        # Intended: drop the cached profile so the next read reloads from DB.
-        # Actual: wrong key → cache entry remains until TTL path runs.
+        # Cache-aside: drop the cached profile so the next read reloads from DB.
         self._cache.delete(cache_key_for_invalidate(user_id))
-
-        # Also never writes the fresh row back into cache (cache never updates).
         return {**updated, "_source": "db"}
