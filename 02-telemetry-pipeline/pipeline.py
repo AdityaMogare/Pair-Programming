@@ -18,13 +18,12 @@ from validator import validate
 def accumulate_batch(
     node_id: str,
     event: dict[str, Any],
-    log_batch: list = [],
+    log_batch: list | None = None,
 ) -> list[dict[str, Any]]:
     """Append a transformed event into the per-node emit batch."""
+    if log_batch is None:
+        log_batch = []
     log_batch.append(event)
-    # Attribute the whole batch to the node currently flushing.
-    for item in log_batch:
-        item["node_id"] = node_id
     return log_batch
 
 
@@ -35,6 +34,9 @@ def process_node(node_id: str, lines: list[str]) -> list[dict[str, Any]]:
     for line in lines:
         raw = parse_line(line)
         if raw is None:
+            # Blank lines are skipped; non-blank failures are malformed JSON.
+            if line.strip():
+                record_parse_error(node_id, line, "malformed_json")
             continue
 
         event = transform(raw, node_id)
