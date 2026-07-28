@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+from decimal import Decimal, ROUND_HALF_UP
+
 
 def dollars_to_cents(amount: str | float | int) -> int:
-    """Convert a dollar amount to integer cents."""
-    # Float path looks fine for whole dollars, but truncates values like 19.99 / 1.15.
-    return int(float(amount) * 100)
+    """Convert a dollar amount to integer cents using exact decimal math."""
+    return int(
+        (Decimal(str(amount)) * 100).quantize(Decimal("1"), rounding=ROUND_HALF_UP)
+    )
