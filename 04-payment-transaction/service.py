@@ -23,9 +23,7 @@ class PaymentService:
         checkout_id: str,
         idempotency_key: str,
     ) -> dict[str, Any]:
-        # BUG: lookup uses checkout_id, but charges are indexed by idempotency_key.
-        # Same-checkout retries miss the index and create a second capture.
-        existing = self._ledger.find_by_idempotency(checkout_id)
+        existing = self._ledger.find_by_idempotency(idempotency_key)
         if existing is not None:
             return {
                 "ok": True,
@@ -36,7 +34,7 @@ class PaymentService:
 
         cents = dollars_to_cents(amount)
 
-        # Debit first so the hold is visible — must roll back on gateway failure.
+        # Debit first so the hold is visible — roll back on gateway failure.
         if not self._ledger.debit(account_id, cents):
             return {
                 "ok": False,
@@ -52,13 +50,14 @@ class PaymentService:
                 idempotency_key=idempotency_key,
             )
         except GatewayTimeout:
+            self._ledger.credit(account_id, cents)
             return {
                 "ok": False,
                 "error": "gateway_timeout",
                 "balance_cents": self._ledger.balance(account_id),
             }
         except GatewayError as exc:
-            # BUG: balance already debited; hard failure never credits back.
+            self._ledger.credit(account_id, cents)
             return {
                 "ok": False,
                 "error": str(exc),
