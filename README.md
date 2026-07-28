@@ -33,7 +33,7 @@ python3 test_detector.py
 | [`01-anomaly-detector/`](01-anomaly-detector/) | 1 | Local logic / anomaly rules | **Ready** |
 | [`02-telemetry-pipeline/`](02-telemetry-pipeline/) | 2 | Structured logging & transforms | Scaffold |
 | [`03-cache-invalidation/`](03-cache-invalidation/) | 3 | Redis cache consistency | Scaffold |
-| [`04-payment-transaction/`](04-payment-transaction/) | 3 | Money & idempotency | Scaffold |
+| [`04-payment-transaction/`](04-payment-transaction/) | 3 | Money & idempotency | **Ready** |
 | [`05-rate-limiter/`](05-rate-limiter/) | 2 | Request throttling | Scaffold |
 | [`06-background-jobs/`](06-background-jobs/) | 3 | Queue workers | Scaffold |
 | [`07-auth-session-expiry/`](07-auth-session-expiry/) | 2 | Sessions & tokens | Scaffold |

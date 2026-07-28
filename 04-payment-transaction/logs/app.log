@@ -1,2 +1,6 @@
-# Placeholder log stream for 04-payment-transaction
-# Replace with realistic app / worker / gateway logs when the exercise is authored.
+2025-07-12T16:02:00Z INFO  payments-api boot env=prod
+2025-07-12T16:02:01Z INFO  payments-api charge accepted checkout=co_1001
+2025-07-12T16:02:08Z WARN  payments-api charge accepted checkout=co_1001 replay=true
+2025-07-12T16:02:08Z ERROR payments-api analytics double_count checkout=co_1001 keys=[idem_retry_1,idem_retry_1]
+2025-07-12T16:04:01Z WARN  payments-api charge failed checkout=co_1003 balance_moved=true
+2025-07-12T16:04:40Z WARN  payments-api charge timeout checkout=co_1004 balance_moved=true

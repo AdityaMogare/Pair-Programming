@@ -1,0 +1,15 @@
+2025-07-12T16:02:01Z INFO  payments-api POST /charges checkout=co_1001 amount=19.99 key=idem_retry_1
+2025-07-12T16:02:01Z INFO  ledger DEBIT acct_alice cents=1998 note=float_truncation_suspected
+2025-07-12T16:02:01Z INFO  gateway CAPTURE gw_0001 status=captured
+2025-07-12T16:02:01Z INFO  ledger RECORD charge_id=ch_0001 key=idem_retry_1
+2025-07-12T16:02:08Z WARN  worker retry checkout=co_1001 key=idem_retry_1 reason=client_timeout_replay
+2025-07-12T16:02:08Z INFO  ledger IDEMPOTENCY_LOOKUP key=co_1001 result=miss
+2025-07-12T16:02:08Z WARN  ledger DEBIT acct_alice cents=1998 duplicate_suspected=true
+2025-07-12T16:02:08Z INFO  gateway CAPTURE gw_0002 status=captured
+2025-07-12T16:02:08Z ERROR finance ticket=FIN-2201 checkout=co_1001 symptom=duplicate_charge_same_checkout
+2025-07-12T16:03:10Z INFO  payments-api POST /charges checkout=co_1002 amount=1.15
+2025-07-12T16:03:10Z WARN  money to_cents amount=1.15 stored=114 expected=115
+2025-07-12T16:04:01Z INFO  gateway DECLINE checkout=co_1003 reason=processor_declined
+2025-07-12T16:04:01Z WARN  ledger HOLD acct_alice cents=500 remains_after_decline=true
+2025-07-12T16:04:40Z INFO  gateway TIMEOUT checkout=co_1004
+2025-07-12T16:04:40Z WARN  ledger HOLD acct_alice cents=100 remains_after_timeout=true

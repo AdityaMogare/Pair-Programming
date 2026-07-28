@@ -1,0 +1,6 @@
+{
+  "account_id": "acct_alice",
+  "amount": "19.99",
+  "checkout_id": "co_1001",
+  "idempotency_key": "idem_retry_1"
+}

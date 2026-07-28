@@ -1,0 +1,8 @@
+{
+  "accounts": [
+    {
+      "account_id": "acct_alice",
+      "balance_cents": 10000
+    }
+  ]
+}

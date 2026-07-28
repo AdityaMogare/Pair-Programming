@@ -1,0 +1,128 @@
+{
+  "description": "Idempotent retries, exact cent math, and clean rollback on gateway failure",
+  "steps": [
+    {
+      "name": "charge_19_99_exact_cents",
+      "action": {
+        "action": "charge",
+        "account_id": "acct_alice",
+        "amount": "19.99",
+        "checkout_id": "co_1001",
+        "idempotency_key": "idem_retry_1"
+      },
+      "expect": {
+        "ok": true,
+        "duplicate": false,
+        "balance_cents": 8001,
+        "charge": {
+          "checkout_id": "co_1001",
+          "idempotency_key": "idem_retry_1",
+          "amount_cents": 1999,
+          "status": "captured"
+        }
+      }
+    },
+    {
+      "name": "timeout_retry_same_key_must_not_double_charge",
+      "action": {
+        "action": "charge",
+        "account_id": "acct_alice",
+        "amount": "19.99",
+        "checkout_id": "co_1001",
+        "idempotency_key": "idem_retry_1"
+      },
+      "expect": {
+        "ok": true,
+        "duplicate": true,
+        "balance_cents": 8001,
+        "charge": {
+          "checkout_id": "co_1001",
+          "idempotency_key": "idem_retry_1",
+          "amount_cents": 1999,
+          "status": "captured"
+        }
+      }
+    },
+    {
+      "name": "ledger_still_one_charge_after_retry",
+      "action": {"action": "charges"},
+      "expect": {
+        "ok": true,
+        "charge_count": 1
+      }
+    },
+    {
+      "name": "charge_1_15_float_trap",
+      "action": {
+        "action": "charge",
+        "account_id": "acct_alice",
+        "amount": "1.15",
+        "checkout_id": "co_1002",
+        "idempotency_key": "idem_float_2"
+      },
+      "expect": {
+        "ok": true,
+        "duplicate": false,
+        "balance_cents": 7886,
+        "charge": {
+          "amount_cents": 115,
+          "idempotency_key": "idem_float_2"
+        }
+      }
+    },
+    {
+      "name": "script_processor_decline",
+      "action": {
+        "action": "script_gateway",
+        "outcomes": ["fail"]
+      },
+      "expect": {"ok": true}
+    },
+    {
+      "name": "declined_charge_must_not_keep_debit",
+      "action": {
+        "action": "charge",
+        "account_id": "acct_alice",
+        "amount": "5.00",
+        "checkout_id": "co_1003",
+        "idempotency_key": "idem_fail_3"
+      },
+      "expect": {
+        "ok": false,
+        "error": "processor_declined",
+        "balance_cents": 7886
+      }
+    },
+    {
+      "name": "script_gateway_timeout",
+      "action": {
+        "action": "script_gateway",
+        "outcomes": ["timeout"]
+      },
+      "expect": {"ok": true}
+    },
+    {
+      "name": "timeout_must_not_leave_partial_hold",
+      "action": {
+        "action": "charge",
+        "account_id": "acct_alice",
+        "amount": "1.00",
+        "checkout_id": "co_1004",
+        "idempotency_key": "idem_timeout_4"
+      },
+      "expect": {
+        "ok": false,
+        "error": "gateway_timeout",
+        "balance_cents": 7886
+      }
+    },
+    {
+      "name": "final_charge_count_unchanged_by_failures",
+      "action": {"action": "charges"},
+      "expect": {
+        "ok": true,
+        "charge_count": 2
+      }
+    }
+  ]
+}
