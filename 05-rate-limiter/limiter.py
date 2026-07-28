@@ -22,8 +22,7 @@ class RateLimiter:
         self._clock = clock
 
     def _key(self, user_id: str) -> str:
-        # BUG: missing user_id — every client shares one counter.
-        return "rl:global"
+        return f"rl:{user_id}"
 
     def allow(self, user_id: str) -> dict[str, Any]:
         now = self._clock()
@@ -31,12 +30,9 @@ class RateLimiter:
         timestamps = self._store.get(key)
 
         # Drop timestamps that have aged out of the sliding window.
-        # BUG: `<=` keeps the request that sits exactly on the window edge.
-        timestamps = [t for t in timestamps if now - t <= self._window]
+        timestamps = [t for t in timestamps if now - t < self._window]
 
-        # BUG: off-by-one — rejects when the window already has limit-1 hits
-        # (429 on the Nth request instead of allowing N).
-        if len(timestamps) >= self._limit - 1 and self._limit > 0:
+        if len(timestamps) >= self._limit:
             self._store.set(key, timestamps)
             return {
                 "allowed": False,
