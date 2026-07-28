@@ -1,2 +1,4 @@
-# Placeholder log stream for 05-rate-limiter
-# Replace with realistic app / worker / gateway logs when the exercise is authored.
+2025-07-13T09:15:00Z INFO  rate-api boot limit=3 window_seconds=60
+2025-07-13T09:15:01Z WARN  rate-api alice status=429 remaining=0 earlier_than_expected=true
+2025-07-13T09:15:02Z WARN  rate-api bob status=429 after_alice_noise=true
+2025-07-13T09:16:01Z WARN  rate-api alice status=429 at_window_boundary=true

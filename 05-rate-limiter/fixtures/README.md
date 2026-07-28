@@ -1,3 +1,6 @@
 # Fixtures for 05-rate-limiter
 
-Add sample payloads, seed data, and expected outputs here when authoring the exercise.
+| File | Role |
+|------|------|
+| `seed_config.json` | Default limit (3) and sliding window (60s) |
+| `expected_scenario.json` | Alice fill / Bob isolation / exact window-edge steps |

@@ -1,35 +1,62 @@
-# Rate limiter
+# 05 — Rate limiter
 
 **Level 2** · Request throttling
 
 ## Scenario
-API clients are getting 429s too early, or one noisy user is starving others. Edge gateway metrics look wrong for the sliding window.
+
+API clients are getting 429s too early under a limit of N, and one noisy user appears to starve everyone else. Edge gateway metrics for the sliding window also look wrong exactly when the window should roll forward.
+
+## Stack
+
+```text
+API harness (app.py)
+  ↓
+RateLimiter (limiter.py) — sliding window of request timestamps
+  ↓
+TimestampStore (store.py)
+```
 
 ## Expected behavior
-Per-user limits enforce N requests per window; windows don't collide across users; counters behave at boundaries.
+
+| Path | Behavior |
+|------|----------|
+| **Allow** | Each user may send up to **N** requests inside the window |
+| **Block** | Request **N+1** in the same window returns **429** |
+| **Isolation** | Counters are **per user** — Alice’s traffic must not 429 Bob |
+| **Window edge** | A hit exactly `window_seconds` old is aged out (`now - t < window`) |
 
 ## Broken behavior
-Off-by-one window behavior and key collisions. Boundary tests fail.
+
+Regression tests against `fixtures/expected_scenario.json` fail: the Nth request is rejected early, Bob shares Alice’s counter, and the exact window boundary still counts the oldest hit.
 
 ## Run
+
 ```bash
 cd 05-rate-limiter
 python3 test_rate_limiter.py
+# optional:
+python3 run.py
 ```
 
 ## Hints
-- Draw the window on paper for the failing fixture
-- Check key namespacing per user
-- Read logs/gateway.log around 429s
 
-## Planned bug themes
-off-by-one window, per-user key collision, global limit misapplied, clock drift, counter reset bug
+- Draw the window on paper for the failing fixture steps
+- Check key namespacing per user in `logs/gateway.log`
+- Inspect the allow / deny comparison against `limit`
+- At exactly `window_seconds` later — is the oldest timestamp pruned?
+
+### Probe steps
+
+| Step | Why |
+|------|-----|
+| `alice_3_allowed_nth_must_pass` | Off-by-one / 429 too early |
+| `bob_not_starved_by_alice` | Shared / colliding counter key |
+| `alice_after_window_edge_must_allow` | Inclusive vs exclusive window edge |
 
 ## Success criteria
-The tests pass and the behavior matches the scenario.
+
+`python3 test_rate_limiter.py` exits 0 and matches `fixtures/expected_scenario.json`.
 
 ## Stuck?
-Open PR `solution/05-rate-limiter` → **Files changed** (when published). Do not merge that PR.
 
-## Status
-Scaffold only — buggy `app.py` and rich fixtures/logs still to be authored.
+Open PR **`solution/05-rate-limiter`** → **Files changed**. Do not merge that PR.

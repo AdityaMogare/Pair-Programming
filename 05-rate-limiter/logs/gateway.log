@@ -1,0 +1,7 @@
+2025-07-13T09:15:01Z INFO  gateway GET /v1/items user=alice decision=allow count=1 key=rl:global
+2025-07-13T09:15:01Z INFO  gateway GET /v1/items user=alice decision=allow count=2 key=rl:global
+2025-07-13T09:15:01Z WARN  gateway GET /v1/items user=alice decision=429 count=2 limit=3 note=rejected_before_nth
+2025-07-13T09:15:02Z WARN  gateway GET /v1/items user=bob decision=429 count=2 key=rl:global note=shared_counter
+2025-07-13T09:16:01Z INFO  gateway window_elapsed user=alice seconds=60
+2025-07-13T09:16:01Z WARN  gateway GET /v1/items user=alice decision=429 count=2 note=edge_timestamp_still_counted
+2025-07-13T09:16:05Z ERROR support ticket=TCK-5510 symptom=429_too_early_and_bob_starved
