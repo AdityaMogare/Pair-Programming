@@ -36,37 +36,42 @@ class Worker:
         try:
             result = self._handler.handle(job)
         except TransientError as exc:
-            attempts = int(job.get("attempts", 0)) + 1
-            # BUG: never dead-letters — poison jobs nack forever past max_attempts.
-            self._queue.nack(job_id)
+            next_attempts = int(job.get("attempts", 0)) + 1
+            if next_attempts >= self._max_attempts:
+                self._queue.dead_letter(job_id)
+                action = "dlq"
+            else:
+                self._queue.nack(job_id)
+                action = "nack"
             return {
                 "ok": False,
                 "processed": True,
                 "job_id": job_id,
                 "error": str(exc),
-                "attempts": attempts,
-                "action": "nack",
+                "attempts": next_attempts,
+                "action": action,
                 "redelivered": redelivered,
                 "stats": self._queue.stats(),
             }
         except Exception as exc:  # noqa: BLE001
-            # BUG: swallow unexpected errors — job stays inflight, never acked/nacked.
+            # Unexpected crash — dead-letter so the job does not stick inflight.
+            self._queue.dead_letter(job_id)
             return {
                 "ok": False,
                 "processed": True,
                 "job_id": job_id,
                 "error": str(exc),
-                "action": "swallowed",
+                "action": "dlq",
                 "redelivered": redelivered,
                 "stats": self._queue.stats(),
             }
 
-        # BUG: success path never acks — job is redelivered on the next tick.
+        self._queue.ack(job_id)
         return {
             "ok": True,
             "processed": True,
             "job_id": job_id,
-            "action": "handled",
+            "action": "ack",
             "result": result,
             "redelivered": redelivered,
             "stats": self._queue.stats(),
