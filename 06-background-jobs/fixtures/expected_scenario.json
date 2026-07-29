@@ -1,0 +1,128 @@
+{
+  "description": "Ack after success, retry transient failures, DLQ poison jobs, no duplicate sends",
+  "max_attempts": 3,
+  "steps": [
+    {
+      "name": "enqueue_alice_digest",
+      "action": {
+        "action": "enqueue",
+        "job_id": "job_alice",
+        "user_id": "alice",
+        "outcomes": ["ok"]
+      },
+      "expect": {"ok": true, "stats": {"ready": 1, "inflight": 0, "done": 0, "dlq": 0}}
+    },
+    {
+      "name": "tick_alice_success_acks",
+      "action": {"action": "tick"},
+      "expect": {
+        "ok": true,
+        "processed": true,
+        "job_id": "job_alice",
+        "action": "ack",
+        "sent_count": 1,
+        "stats": {"ready": 0, "inflight": 0, "done": 1, "dlq": 0}
+      }
+    },
+    {
+      "name": "tick_idle_must_not_resend_alice",
+      "action": {"action": "tick"},
+      "expect": {
+        "ok": true,
+        "processed": false,
+        "sent_count": 1,
+        "stats": {"ready": 0, "inflight": 0, "done": 1, "dlq": 0}
+      }
+    },
+    {
+      "name": "enqueue_bob_then_retry",
+      "action": {
+        "action": "enqueue",
+        "job_id": "job_bob",
+        "user_id": "bob",
+        "outcomes": ["fail", "ok"]
+      },
+      "expect": {"ok": true}
+    },
+    {
+      "name": "tick_bob_transient_nacks",
+      "action": {"action": "tick"},
+      "expect": {
+        "ok": false,
+        "processed": true,
+        "job_id": "job_bob",
+        "action": "nack",
+        "stats": {"ready": 1, "inflight": 0, "done": 1, "dlq": 0}
+      }
+    },
+    {
+      "name": "tick_bob_retry_succeeds",
+      "action": {"action": "tick"},
+      "expect": {
+        "ok": true,
+        "processed": true,
+        "job_id": "job_bob",
+        "action": "ack",
+        "sent_count": 2,
+        "stats": {"ready": 0, "inflight": 0, "done": 2, "dlq": 0}
+      }
+    },
+    {
+      "name": "enqueue_poison_carol",
+      "action": {
+        "action": "enqueue",
+        "job_id": "job_carol",
+        "user_id": "carol",
+        "outcomes": ["fail", "fail", "fail", "fail"]
+      },
+      "expect": {"ok": true}
+    },
+    {
+      "name": "tick_carol_fail_1",
+      "action": {"action": "tick"},
+      "expect": {"ok": false, "action": "nack", "job_id": "job_carol"}
+    },
+    {
+      "name": "tick_carol_fail_2",
+      "action": {"action": "tick"},
+      "expect": {"ok": false, "action": "nack", "job_id": "job_carol"}
+    },
+    {
+      "name": "tick_carol_poison_to_dlq",
+      "action": {"action": "tick"},
+      "expect": {
+        "ok": false,
+        "processed": true,
+        "job_id": "job_carol",
+        "action": "dlq",
+        "stats": {"ready": 0, "inflight": 0, "done": 2, "dlq": 1}
+      }
+    },
+    {
+      "name": "enqueue_crash_dave",
+      "action": {
+        "action": "enqueue",
+        "job_id": "job_dave",
+        "user_id": "dave",
+        "outcomes": ["crash"]
+      },
+      "expect": {"ok": true}
+    },
+    {
+      "name": "tick_crash_must_not_stick_inflight",
+      "action": {"action": "tick"},
+      "expect": {
+        "ok": false,
+        "processed": true,
+        "job_id": "job_dave",
+        "action": "dlq",
+        "stats": {"ready": 0, "inflight": 0, "done": 2, "dlq": 2}
+      }
+    },
+    {
+      "name": "final_sent_no_duplicates",
+      "action": {"action": "sent"},
+      "expect": {"ok": true, "sent_count": 2}
+    }
+  ]
+}

@@ -1,2 +1,4 @@
-# Placeholder log stream for 06-background-jobs
-# Replace with realistic app / worker / gateway logs when the exercise is authored.
+2025-07-14T11:00:00Z INFO  jobs-api boot max_attempts=3
+2025-07-14T11:00:02Z WARN  jobs-api duplicate_send job=job_alice
+2025-07-14T11:01:13Z WARN  jobs-api poison_still_ready job=job_carol attempts=3
+2025-07-14T11:02:01Z WARN  jobs-api worker_quiet inflight=1 ready=0

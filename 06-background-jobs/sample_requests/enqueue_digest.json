@@ -1,0 +1,6 @@
+{
+  "action": "enqueue",
+  "job_id": "job_alice",
+  "user_id": "alice",
+  "outcomes": ["ok"]
+}

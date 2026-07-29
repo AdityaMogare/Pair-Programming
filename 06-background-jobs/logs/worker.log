@@ -1,0 +1,13 @@
+2025-07-14T11:00:01Z INFO  worker tick=1 reserve=job_alice
+2025-07-14T11:00:01Z INFO  handler SEND digest user=alice job=job_alice
+2025-07-14T11:00:01Z WARN  worker missing_ack job=job_alice inflight=1
+2025-07-14T11:00:02Z WARN  worker tick=2 requeue_stale=[job_alice]
+2025-07-14T11:00:02Z INFO  handler SEND digest user=alice job=job_alice
+2025-07-14T11:00:02Z ERROR analytics duplicate_digest user=alice job=job_alice count=2
+2025-07-14T11:01:10Z INFO  worker tick reserve=job_carol attempts=0 error=smtp_unavailable
+2025-07-14T11:01:11Z INFO  worker nack job=job_carol attempts=1
+2025-07-14T11:01:12Z INFO  worker nack job=job_carol attempts=2
+2025-07-14T11:01:13Z INFO  worker nack job=job_carol attempts=3 note=past_max_no_dlq
+2025-07-14T11:02:01Z ERROR worker crash job=job_dave RuntimeError worker_segfault
+2025-07-14T11:02:01Z WARN  worker swallowed job=job_dave inflight=1 ready=0 note=queue_depth_looks_fine
+2025-07-14T11:02:05Z ERROR support ticket=TCK-6601 symptom=duplicate_digest_and_quiet_worker
